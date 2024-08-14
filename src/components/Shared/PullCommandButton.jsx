@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import { Grid, Button, FormControl, Menu, MenuItem, Box, Tab, InputBase, IconButton, ButtonBase } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { dockerPull, podmanPull, skopeoPull } from 'utilities/pullStrings';
+import { tartPull, podmanPull, skopeoPull } from 'utilities/pullStrings';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
@@ -115,9 +115,9 @@ function PullCommandButton(props) {
 
   const [anchor, setAnchor] = useState();
   const open = Boolean(anchor);
-  const [pullString, setPullString] = useState(dockerPull(imageName));
+  const [pullString, setPullString] = useState(tartPull(imageName));
   const [isCopied, setIsCopied] = useState(false);
-  const [selectedPullTab, setSelectedPullTab] = useState(dockerPull(imageName));
+  const [selectedPullTab, setSelectedPullTab] = useState(tartPull(imageName));
 
   const mounted = useRef(false);
 
@@ -193,13 +193,13 @@ function PullCommandButton(props) {
                 TabIndicatorProps={{ className: classes.selectedPullTab }}
                 sx={{ '& button.Mui-selected': { color: '#14191F', fontWeight: '600' } }}
               >
-                <Tab value={dockerPull(imageName)} label="Docker" className={classes.tabContent} />
+                <Tab value={tartPull(imageName)} label="Tart" className={classes.tabContent} />
                 <Tab value={podmanPull(imageName)} label="Podman" className={classes.tabContent} />
                 <Tab value={skopeoPull(imageName)} label="Skopeo" className={classes.tabContent} />
               </TabList>
               <Grid container>
                 <Grid item xs={12}>
-                  <TabPanel value={dockerPull(imageName)} className={classes.tabPanel}>
+                  <TabPanel value={tartPull(imageName)} className={classes.tabPanel}>
                     <Box className={classes.tabBox}>
                       <Grid container item xs={12} className={classes.pullStringBox}>
                         <Grid item xs={10}>
@@ -207,7 +207,7 @@ function PullCommandButton(props) {
                             classes={{ input: classes.pullText }}
                             onKeyDownCapture={(e) => e.preventDefault()}
                             className={classes.textEllipsis}
-                            defaultValue={dockerPull(imageName)}
+                            defaultValue={tartPull(imageName)}
                           />
                         </Grid>
                         <Grid item xs={2} onClick={handleCopyClick} className={classes.copyButtonContainer}>
