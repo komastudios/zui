@@ -3,6 +3,12 @@ const hostConfig = {
   default: 'http://localhost:5000'
 };
 
+const hostConfigEnv = process.env.REACT_APP_HOST_CONFIG_DEFAULT;
+if (hostConfigEnv) {
+  hostConfig.auto = false;
+  hostConfig.default = hostConfigEnv;
+}
+
 const host = (manualHost = null) => {
   if (hostConfig.auto) {
     return window.location.origin;
