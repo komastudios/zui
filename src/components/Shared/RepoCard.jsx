@@ -306,7 +306,7 @@ function RepoCard(props) {
     const sigArray = [];
     if (cosign) sigArray.push(cosign);
     if (notation) sigArray.push(notation);
-    if (sigArray.length === 0) return <SignatureIconCheck />;
+    if (sigArray.length === 0) return; // <SignatureIconCheck />;
     return sigArray.map((sig, index) => (
       <div className="hide-on-mobile" key={`${name}sig${index}`}>
         <SignatureIconCheck signatureInfo={sig} />
