@@ -41,6 +41,10 @@ import repocube1 from '../../assets/repocube-1.png';
 import repocube2 from '../../assets/repocube-2.png';
 import repocube3 from '../../assets/repocube-3.png';
 import repocube4 from '../../assets/repocube-4.png';
+import cache1 from '../../assets/cache-1.png';
+import cache2 from '../../assets/cache-1.png';
+import cache3 from '../../assets/cache-1.png';
+import cache4 from '../../assets/cache-1.png';
 
 // temporary utility to get image
 const randomIntFromInterval = (min, max) => {
@@ -49,6 +53,11 @@ const randomIntFromInterval = (min, max) => {
 
 const randomImage = () => {
   const imageArray = [repocube1, repocube2, repocube3, repocube4];
+  return imageArray[randomIntFromInterval(0, 3)];
+};
+
+const randomCacheImage = () => {
+  const imageArray = [cache1, cache2, cache3, cache4];
   return imageArray[randomIntFromInterval(0, 3)];
 };
 
@@ -172,7 +181,7 @@ const useStyles = makeStyles((theme) => ({
 function RepoCard(props) {
   const classes = useStyles();
   const navigate = useNavigate();
-  const placeholderImage = useRef(randomImage());
+
   // dynamically check device size with mui media query hook
   const theme = useTheme();
   const isXsSize = useMediaQuery(theme.breakpoints.down('md'));
@@ -194,6 +203,12 @@ function RepoCard(props) {
     isBookmarked,
     isStarred
   } = props;
+
+  const placeholderCube = useRef(randomImage());
+  const placeholderCache = useRef(randomCacheImage());
+  const getPlaceholderImage = () => {
+    return name?.startsWith('cache/') ? placeholderCache.current : placeholderCube.current;
+  };
 
   // keep a local bookmark state to display in the ui dynamically on updates
   const [currentBookmarkValue, setCurrentBookmarkValue] = useState(isBookmarked);
@@ -333,7 +348,7 @@ function RepoCard(props) {
                     img: classes.avatar
                   }}
                   component="img"
-                  image={placeholderImage.current}
+                  image={getPlaceholderImage()}
                   alt="icon"
                 />
                 <Tooltip title={name} placement="top">

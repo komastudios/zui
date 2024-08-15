@@ -8,6 +8,10 @@ import repocube1 from '../../assets/repocube-1.png';
 import repocube2 from '../../assets/repocube-2.png';
 import repocube3 from '../../assets/repocube-3.png';
 import repocube4 from '../../assets/repocube-4.png';
+import cache1 from '../../assets/cache-1.png';
+import cache2 from '../../assets/cache-1.png';
+import cache3 from '../../assets/cache-1.png';
+import cache4 from '../../assets/cache-1.png';
 
 import { isEmpty } from 'lodash';
 import { VulnerabilityIconCheck } from 'utilities/vulnerabilityAndSignatureCheck';
@@ -19,6 +23,11 @@ const randomIntFromInterval = (min, max) => {
 
 const randomImage = () => {
   const imageArray = [repocube1, repocube2, repocube3, repocube4];
+  return imageArray[randomIntFromInterval(0, 3)];
+};
+
+const randomCacheImage = () => {
+  const imageArray = [cache1, cache2, cache3, cache4];
   return imageArray[randomIntFromInterval(0, 3)];
 };
 
@@ -86,7 +95,7 @@ function PreviewCard(props) {
                     img: classes.avatar
                   }}
                   component="img"
-                  image={!isEmpty(logo) ? `data:image/png;base64, ${logo}` : randomImage()}
+                  image={!isEmpty(logo) ? `data:image/png;base64, ${logo}` : (name.startsWith('cache/') ? randomCacheImage() : randomImage())}
                   alt="icon"
                 />
                 <Tooltip title={name} placement="top">

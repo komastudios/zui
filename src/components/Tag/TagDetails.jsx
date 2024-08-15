@@ -38,6 +38,10 @@ import repocube1 from '../../assets/repocube-1.png';
 import repocube2 from '../../assets/repocube-2.png';
 import repocube3 from '../../assets/repocube-3.png';
 import repocube4 from '../../assets/repocube-4.png';
+import cache1 from '../../assets/cache-1.png';
+import cache2 from '../../assets/cache-1.png';
+import cache3 from '../../assets/cache-1.png';
+import cache4 from '../../assets/cache-1.png';
 
 const useStyles = makeStyles((theme) => ({
   pageWrapper: {
@@ -135,12 +139,17 @@ const randomImage = () => {
   return imageArray[randomIntFromInterval(0, 3)];
 };
 
+const randomCacheImage = () => {
+  const imageArray = [cache1, cache2, cache3, cache4];
+  return imageArray[randomIntFromInterval(0, 3)];
+};
+
 function TagDetails() {
   const [imageDetailData, setImageDetailData] = useState({});
   const [selectedManifest, setSelectedManifest] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [selectedTab, setSelectedTab] = useState('Layers');
-  const placeholderImage = useRef(randomImage());
+
   const abortController = useMemo(() => new AbortController(), []);
   const navigate = useNavigate();
 
@@ -150,6 +159,12 @@ function TagDetails() {
 
   // get url param from <Route here (i.e. image name)
   const { reponame, tag } = useParams();
+
+  const placeholderCube = useRef(randomImage());
+  const placeholderCache = useRef(randomCacheImage());
+  const getPlaceholderImage = () => {
+    return reponame?.startsWith('cache/') ? placeholderCache.current : placeholderCube.current;
+  };
 
   const classes = useStyles();
 
@@ -271,7 +286,7 @@ function TagDetails() {
                             img: classes.avatar
                           }}
                           component="img"
-                          image={placeholderImage.current}
+                          image={getPlaceholderImage()}
                           alt="icon"
                         />
                         <Typography variant="h4" className={classes.repoName}>

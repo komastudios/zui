@@ -30,6 +30,10 @@ import repocube1 from '../../assets/repocube-1.png';
 import repocube2 from '../../assets/repocube-2.png';
 import repocube3 from '../../assets/repocube-3.png';
 import repocube4 from '../../assets/repocube-4.png';
+import cache1 from '../../assets/cache-1.png';
+import cache2 from '../../assets/cache-1.png';
+import cache3 from '../../assets/cache-1.png';
+import cache4 from '../../assets/cache-1.png';
 
 import makeStyles from '@mui/styles/makeStyles';
 
@@ -161,10 +165,21 @@ const randomImage = () => {
   return imageArray[randomIntFromInterval(0, 3)];
 };
 
+const randomCacheImage = () => {
+  const imageArray = [cache1, cache2, cache3, cache4];
+  return imageArray[randomIntFromInterval(0, 3)];
+};
+
 function RepoDetails() {
   const [repoDetailData, setRepoDetailData] = useState({});
   const [tags, setTags] = useState([]);
-  const placeholderImage = useRef(randomImage());
+
+  const placeholderCube = useRef(randomImage());
+  const placeholderCache = useRef(randomCacheImage());
+  const getPlaceholderImage = () => {
+    return repoDetailData?.name?.startsWith('cache/') ? placeholderCache.current : placeholderCube.current;
+  };
+
   const [isLoading, setIsLoading] = useState(true);
   // get url param from <Route here (i.e. image name)
   const { name } = useParams();
@@ -302,7 +317,7 @@ function RepoDetails() {
                             img: classes.avatar
                           }}
                           component="img"
-                          image={placeholderImage.current}
+                          image={getPlaceholderImage()}
                           alt="icon"
                         />
                         <Typography variant="h4" className={classes.repoName}>
